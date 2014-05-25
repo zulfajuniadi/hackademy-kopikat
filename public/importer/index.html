@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script>
+    var JST = {};
+  </script>
+  <script src="handlebars.js"></script>
+  <script src="templates.js"></script>
+  <script src="utils.js"></script>
+  <script src="ImpressGenerator.js"></script>
+  <script src="jquery.js"></script>
+  <script src="underscore.js"></script>
+</head>
+<body>
+  <h1>Pick your exported presentation</h1>
+  <input type="file" id="filepicker">
+
+  <script>
+  Handlebars.registerHelper("debug", function(optionalValue) {
+    console.log("Current Context");
+    console.log("====================");
+    console.log(this);
+   
+    if (optionalValue) {
+      console.log("Value");
+      console.log("====================");
+      console.log(optionalValue);
+    }
+  });
+
+
+  window.result = null;
+
+
+  var import_file = function(file) {
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      window.result = ImpressGenerator.render(JSON.parse(e.target.result));
+
+      console.log(window.result);
+
+    }
+
+    reader.readAsText(file);
+
+  }
+
+  var fp = $('#filepicker');
+
+  fp.on('change', function(e){
+    if(e.target.files[0]) {
+      import_file(e.target.files[0]);
+    }
+  });
+  </script>
+</body>
+</html>

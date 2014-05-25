@@ -1,0 +1,221 @@
+<template name="class_layout">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Kopikat</title>
+
+    <meta name="description" content="TODO" />
+    <meta name="author" content="TODO" />
+
+    <style>
+        .componentContainer {
+            position: absolute;
+            line-height: normal;
+        /*-webkit-transform-origin: 135% 135%;
+        -moz-transform-origin: 135% 135%;
+        transform-origin: 135% 135%;*/
+    }
+
+    .transformContainer {
+        -webkit-transform-origin: 0 0;
+        -moz-transform-origin: 0 0;
+        transform-origin: 0 0;
+    }
+
+    .bg {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<link rel="stylesheet" href="/class/css/themes/default-reset.css" />
+<link href="/class/css/main.css" rel="stylesheet" type='text/css' />
+<link rel="stylesheet" href="/class/css/themes/default.css" id="theme">
+<link href='/class/css/web-fonts.css' rel='stylesheet' type='text/css' />
+<link href='/class/css/strut.themes/backgroundClasses.css' rel='stylesheet' type='text/css' />
+<link href='/class/css/strut.themes/surfaceClasses.css' rel='stylesheet' type='text/css' />
+
+<link rel="shortcut icon" href="favicon.png" type='image/png' />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" type='image/png' />
+
+<style>
+    .reveal.themedArea {
+        display: block;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<div id="launched-placeholder"></div>
+<div id="impress">
+    {{>yield}}
+</div>
+
+<ul class="list-unstyled" id="connected">
+    {{#each connected}}
+        {{#if image}}
+        <li>
+
+            {{#if flagged}}
+                <img src="{{image}}" class="active" alt="" width="40px" height="40px">
+            {{else}}
+                <img src="{{image}}" alt="" width="40px" height="40px">
+            {{/if}}                
+
+        </li>
+        {{/if}}
+    {{/each}}
+</ul>
+
+<nav id="bt-menu" class="bt-menu">
+    <a href="#" class="bt-menu-trigger"><span>Menu</span></a>
+    <ul id="menubutton">
+        {{#if isstudent}}
+            <li><a href="#" id="flagme" class="bt-icon icon-flag">Flag</a></li>
+        {{else}}
+            <li><a href="#" id="deletepres" class="bt-icon icon-trash">Clear</a></li>
+        {{/if}}
+        <li><a href="/" class="bt-icon icon-home">Home</a></li>
+            <!-- <li><a href="#" class="bt-icon icon-browser">Browser</a></li>
+            <li><a href="#" class="bt-icon icon-email">Email</a></li>
+            <li><a href="#" class="bt-icon icon-calculator">Calculate</a></li>
+            <li><a href="#" class="bt-icon icon-cd">Record</a></li> -->
+        </ul>
+
+        {{>chats}}
+    </nav>
+
+    <script>
+        init_bordermenu()
+    </script>
+
+</template>
+
+<template name="chats">
+        
+        <div id="chats">
+            <input id="chatinput" placeholder="Enter to chat" />
+            <ul id="chatlog" class="list-unstyled">
+
+                {{#each messages}}
+                    {{#if isMine }}
+                        <li class="mine">
+                            <img src="{{ gravatar }}" alt="">
+                            {{ message }}
+                            <span class="muted">{{timestamp}}</span>
+                            <div class="clearfix"></div>
+                        </li>
+                    {{else}}
+                        <li>
+                            <img src="{{ gravatar }}" alt="">
+                            {{ message }}
+                            <span class="muted">{{timestamp}}</span>
+                            <div class="clearfix"></div>
+                        </li>
+                    {{/if}}
+                {{/each}}
+            </ul>
+        </div>
+    
+</template>
+
+
+<template name="classtemplate">
+
+  <style>
+    #controls {
+      position: absolute;
+      z-index: 10000;
+    }
+  </style>
+
+  {{{template}}}
+
+  <script>
+
+  setTimeout(function() {
+
+    ready(function() {
+        // if (document.getElementById(
+    // 'launched-placeholder'))
+        //     loadPresentation();
+        if (!window.presStarted) {
+            startPres(document, window);
+            window.imp = impress();
+            window.imp.init();   
+        }
+
+        if ("ontouchstart" in document.documentElement) { 
+            document.querySelector(".hint").innerHTML = 
+                "<p>Tap on the left or right to navigate</p>";
+        }
+    });
+  }, 3000);
+  </script>
+
+</template>
+
+<template name="studenttemplate">
+
+  <style>
+    #controls {
+      position: absolute;
+      z-index: 10000;
+    }
+  </style>
+
+  {{{template}}}
+
+  <script>
+
+  ready(function() {
+    setTimeout(function() {
+      if (!window.presStarted) {
+          student_startPres(document, window);
+          window.imp = impress();
+          window.imp.init();   
+      }
+
+      if ("ontouchstart" in document.documentElement) { 
+          document.querySelector(".hint").innerHTML = 
+              "<p>Tap on the left or right to navigate</p>";
+      }
+    }, 1000);
+  });  
+  </script>
+
+</template>
+
+<template name="teachertemplate">
+
+  <style>
+    #controls {
+      position: absolute;
+      z-index: 10000;
+    }
+  </style>
+
+  {{{template}}}
+
+  <script>
+
+  ready(function() {
+    setTimeout(function() {
+      if (!window.presStarted) {
+          teacher_startPres(document, window);
+          var imp = impress();
+          imp.init();   
+      }
+
+      if ("ontouchstart" in document.documentElement) { 
+          document.querySelector(".hint").innerHTML = 
+              "<p>Tap on the left or right to navigate</p>";
+      }
+    }, 1000); 
+  });  
+  </script>
+
+</template>

@@ -1,0 +1,4 @@
+{{> ComponentContainer}}
+<img src="{{../uri}}"></img>
+</div>
+</div>

@@ -1,0 +1,39 @@
+<template name="home">
+  <br>
+  <div class="container">
+    <img src="/images/logo.png" id="logo" alt="">
+    <div class="pull-right">
+      {{>loginButtons}}
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="clearfix"></div>
+    {{>classes}}
+  </div>
+
+  <input type="file" id="importer">
+
+</template>
+
+<template name="classes">
+  <div class="row" id="class-list">
+    {{#each active}}
+      <div class="col-sm-3 text-center">
+        <a class="wrap {{subject}}" href="/getpath/{{_id}}">
+          <div>
+            <img width="80px" height="80px" src="{{ gravatar }}" alt="">
+            <br>
+          </div>
+          <h3>{{ name }}</h3>
+          <p class="subject">{{subject}}</p>
+        </a>
+      </div>
+    {{/each}}
+    {{#if showImport}}
+      <div class="col-sm-3 text-center">
+        <a class="wrap" id="import"><h1>&plus;</h1></a>
+      </div>
+    {{/if}}
+  </div>  
+</template>
