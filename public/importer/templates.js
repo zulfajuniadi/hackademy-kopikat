@@ -110,16 +110,18 @@ function program11(depth0,data) {
   if(stack1 || stack1 === 0) { buffer += stack1; }
   return buffer;
   });
-templates['Image'] = template(function (Handlebars,depth0,helpers,partials,data,depth1) {
+templates['Image'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); partials = this.merge(partials, Handlebars.partials); data = data || {};
-  var buffer = "", stack1, self=this, functionType="function", escapeExpression=this.escapeExpression;
+  var buffer = "", stack1, helper, self=this, functionType="function", escapeExpression=this.escapeExpression;
 
 
   stack1 = self.invokePartial(partials.ComponentContainer, 'ComponentContainer', depth0, helpers, partials, data);
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n<img src=\""
-    + escapeExpression(((stack1 = (depth1 && depth1.uri)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+  buffer += "\n<img src=\"";
+  if (helper = helpers.src) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.src); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
     + "\"></img>\n</div>\n</div>\n";
   return buffer;
   });
