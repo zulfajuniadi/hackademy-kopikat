@@ -183,8 +183,8 @@
 				x = slide.x;
 				y = slide.y;
 				if (!(x != null)) {
-					slide.x = cnt * 280 + 180);
-					slide.y = ((cnt / colCnt) | 0) * 280 + 180);
+					slide.x = cnt * 280 + 180;
+					slide.y = ((cnt / colCnt) | 0) * 280 + 180;
 				}
 
 				if (minX == null || x < minX)
