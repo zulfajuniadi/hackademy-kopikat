@@ -24,7 +24,12 @@ getUserAvatarUrl = function() {
 }
 
 Template.classes.active = function() {
-  return Classes.find().fetch();
+  if(Session.get('searchedval')) {
+    return Classes.find().fetch().filter(function(cls){
+      return cls.name.toLowerCase().indexOf(Session.get('searchedval').trim().toLowerCase()) > -1;
+    });
+  } else
+    return Classes.find().fetch();
 }
 
 Template.classes.showImport = function() {
@@ -161,7 +166,6 @@ Template.class_layout.events({
         class_id: classId,
         image: {$not: ''}
       });
-      console.log(attendee)
       if(attendee) {
         if(attendee.flagged) {
           Attendees.update({_id: attendee._id}, {$set: {
@@ -205,3 +209,13 @@ Template.class_layout.events({
 Template.class_layout.isstudent = function() {
   return window.location.pathname.indexOf('student') > -1
 }
+
+Template.search.searchval = function() {
+  return Session.get('searchedval');
+}
+
+Template.search.events({
+  'keyup #searchinput': function(e) {
+    Session.set('searchedval', e.target.value);
+  }
+})
